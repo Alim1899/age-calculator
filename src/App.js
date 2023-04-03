@@ -1,11 +1,10 @@
-
-import './App.css';
+import Content from "./components/UI/Content";
+import "./App.css";
 
 function App() {
   return (
     <div>
-    <h2>Start</h2>
-      
+      <Content />
     </div>
   );
 }
