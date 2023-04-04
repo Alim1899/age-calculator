@@ -6,7 +6,7 @@ const Content = (props) => {
   return (
     <div className={classes.content}>
       <Form />
-      <Calculated/>
+      <Calculated year='19' month='6' />
     </div>
   );
 };
