@@ -1,11 +1,13 @@
 import React from "react";
+import classes from './Content.module.css';
 import Form from "../Forms/Form";
+import Calculated from "./Calculated";
 const Content = (props) => {
   return (
-    <>
+    <div className={classes.content}>
       <Form />
-      <h2>{props.day}</h2>
-    </>
+      <Calculated/>
+    </div>
   );
 };
 export default Content;

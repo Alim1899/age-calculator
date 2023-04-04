@@ -15,7 +15,6 @@ const Form = (props) => {
     setYear("");
     setDay("");
     setMonth("");
-    console.log(month, day, year);
   };
   return (
     <div className={classes.form}>
