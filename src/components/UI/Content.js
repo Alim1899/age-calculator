@@ -9,7 +9,6 @@ const Content = (props) => {
       return [...inputtedDate, { day: iDay, month: iMonth, year: iYear }];
     });
     setDate([iDay,iMonth,iYear])
-    console.log(date);
   };
   return (
     <div className={classes.content}>

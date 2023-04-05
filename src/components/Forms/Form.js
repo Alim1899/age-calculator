@@ -6,12 +6,13 @@ const Form = (props) => {
   const [year, setYear] = useState("");
 
   const fieldValidationd = (event, max, calMax) => {
-    console.log(+event.target.value>calMax);
     if (event.target.value.length > max || +event.target.value > calMax) {
       event.target.style.outline = "1px solid red";
-      if (event.target.id === "day") setDay(event.target.value.substring(0,2));
-      if (event.target.id === "month") setMonth(event.target.value.substring(0,2));
-      if (event.target.id === "year") setYear(event.target.value.substring(0,4));
+      if (event.target.id === "day") setDay(event.target.value.substring(0, 2));
+      if (event.target.id === "month")
+        setMonth(event.target.value.substring(0, 2));
+      if (event.target.id === "year")
+        setYear(event.target.value.substring(0, 4));
     } else {
       event.target.style.outline = "none";
       if (event.target.id === "day") setDay(event.target.value);
@@ -19,7 +20,21 @@ const Form = (props) => {
       if (event.target.id === "year") setYear(event.target.value);
     }
   };
+  const calculate = (e, dd, mm, yyyy) => {
+    const enteredDate = new Date(year, month - 1, day);
+    const now = new Date();
+    
+     yyyy = now.getFullYear() - enteredDate.getFullYear();
+     mm = Math.abs(now.getMonth() - enteredDate.getMonth());
+    dd = Math.abs(now.getDate() - enteredDate.getDate());
+    console.log(enteredDate);
+    console.log(now.getDate(), enteredDate.getDate() );
+    console.log(yyyy, "Years", mm, 'Months', dd, "Days old");
+    // if ((day, month, year)) console.log("true");
+    // else console.log("false");
+  };
   const reset = (event) => {
+    calculate();
     event.preventDefault();
     props.onCalculate(day, month, year);
     setYear("");
