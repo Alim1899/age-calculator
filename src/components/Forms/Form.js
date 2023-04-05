@@ -5,13 +5,26 @@ const Form = (props) => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
 
+  const fieldValidationd = (event, max, calMax) => {
+    console.log(+event.target.value>calMax);
+    if (event.target.value.length > max || +event.target.value > calMax) {
+      event.target.style.outline = "1px solid red";
+      if (event.target.id === "day") setDay(event.target.value.substring(0,2));
+      if (event.target.id === "month") setMonth(event.target.value.substring(0,2));
+      if (event.target.id === "year") setYear(event.target.value.substring(0,4));
+    } else {
+      event.target.style.outline = "none";
+      if (event.target.id === "day") setDay(event.target.value);
+      if (event.target.id === "month") setMonth(event.target.value);
+      if (event.target.id === "year") setYear(event.target.value);
+    }
+  };
   const reset = (event) => {
     event.preventDefault();
     props.onCalculate(day, month, year);
     setYear("");
     setDay("");
     setMonth("");
- 
   };
   return (
     <div className={classes.form}>
@@ -24,7 +37,7 @@ const Form = (props) => {
           id="day"
           placeholder="dd"
           value={day}
-          onChange={(e) => setDay(e.target.value)}
+          onChange={(e) => fieldValidationd(e, 2, 31)}
         />
       </label>
       <label htmlFor="month">
@@ -36,7 +49,7 @@ const Form = (props) => {
           id="month"
           placeholder="mm"
           value={month}
-          onChange={(e) => setMonth(e.target.value)}
+          onChange={(e) => fieldValidationd(e, 2, 12)}
         />
       </label>
       <label htmlFor="year">
@@ -48,7 +61,7 @@ const Form = (props) => {
           id="year"
           value={year}
           placeholder="yyyy"
-          onChange={(e) => setYear(e.target.value)}
+          onChange={(e) => fieldValidationd(e, 4, 2023)}
         />
       </label>
       <button onClick={reset} id="submit" type="submit">
