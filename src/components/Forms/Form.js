@@ -4,6 +4,7 @@ const Form = (props) => {
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
+  const [button, setButton] = useState(true);
 
   const fieldValidationd = (event, max, calMax) => {
     if (event.target.value.length > max || +event.target.value > calMax) {
@@ -19,27 +20,40 @@ const Form = (props) => {
       if (event.target.id === "month") setMonth(event.target.value);
       if (event.target.id === "year") setYear(event.target.value);
     }
+
+    calculate();
   };
+
+
+
+
   const calculate = (e, dd, mm, yyyy) => {
     const enteredDate = new Date(year, month - 1, day);
     const now = new Date();
-    
-     yyyy = now.getFullYear() - enteredDate.getFullYear();
-     mm = Math.abs(now.getMonth() - enteredDate.getMonth());
+    yyyy = now.getFullYear() - enteredDate.getFullYear();
+    mm = Math.abs(now.getMonth() - enteredDate.getMonth());
     dd = Math.abs(now.getDate() - enteredDate.getDate());
-    console.log(enteredDate);
-    console.log(now.getDate(), enteredDate.getDate() );
-    console.log(yyyy, "Years", mm, 'Months', dd, "Days old");
-    // if ((day, month, year)) console.log("true");
-    // else console.log("false");
+
+console.log(button);
+    if (month && day && year) {
+      setButton(false);
+      console.log(button, 'truia');
+    }else{
+      setButton(true);
+    }
   };
+
+
+
+
+
   const reset = (event) => {
-    calculate();
     event.preventDefault();
     props.onCalculate(day, month, year);
     setYear("");
     setDay("");
     setMonth("");
+    setButton(true)
   };
   return (
     <div className={classes.form}>
@@ -79,7 +93,7 @@ const Form = (props) => {
           onChange={(e) => fieldValidationd(e, 4, 2023)}
         />
       </label>
-      <button onClick={reset} id="submit" type="submit">
+      <button onClick={reset}  id="submit" type="submit" disabled={button}>
         Calculate
       </button>
     </div>
