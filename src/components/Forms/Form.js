@@ -46,12 +46,13 @@ const Form = (props) => {
     setYear("");
     setDay("");
     setMonth("");
-    setButton(true)
+    setButton()
   };
   return (
     <form
       onChange={btnEnabler}
       className={classes.form}
+      onSubmit={props.onCalculate}
     >
       <label htmlFor="day">
         <h4>Day</h4>

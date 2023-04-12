@@ -1,7 +1,6 @@
 import React from "react";
 import classes from "./Calculated.module.css";
 const Calculated = (props) => {
-  
   return (
     <div className={classes.list}>
       {props.year ? (
