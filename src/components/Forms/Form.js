@@ -34,7 +34,7 @@ const Form = (props) => {
       document.getElementById("month").value > 0 &&
       document.getElementById("year").value > 0
     ) {
-      console.log('tru');
+     
       setButton(false);
     }else{
       setButton(true);
@@ -52,7 +52,6 @@ const Form = (props) => {
     <form
       onChange={btnEnabler}
       className={classes.form}
-      onSubmit={props.onCalculate}
     >
       <label htmlFor="day">
         <h4>Day</h4>

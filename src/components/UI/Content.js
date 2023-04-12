@@ -5,14 +5,17 @@ import Calculated from "./Calculated";
 const Content = (props) => {
   const [date, setDate] = useState([]);
   const calculateDate = (iDay, iMonth, iYear) => {
+    
     setDate((inputtedDate) => {
       return [...inputtedDate, { day: iDay, month: iMonth, year: iYear }];
     });
+    console.log('date');
     setDate([iDay,iMonth,iYear])
   };
+  
   return (
     <div className={classes.content}>
-      <Form onCalculate={calculateDate} />
+      <Form onChange={calculateDate} />
       <Calculated year={date[2]} month={date[1]} day={date[0]} />
     </div>
   );
