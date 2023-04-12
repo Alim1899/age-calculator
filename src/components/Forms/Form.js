@@ -6,26 +6,28 @@ const Form = (props) => {
   const [year, setYear] = useState("");
   const [button, setButton] = useState(true);
 
-  const fieldValidationd = (event, max, calMax) => {
-    if (event.target.value.length > max || +event.target.value > calMax) {
-      event.target.style.outline = "1px solid red";
-      if (event.target.id === "day") setDay(event.target.value.substring(0, 2));
-      if (event.target.id === "month")
-        setMonth(event.target.value.substring(0, 2));
-      if (event.target.id === "year")
-        setYear(event.target.value.substring(0, 4));
-    } else {
-      event.target.style.outline = "none";
-      if (event.target.id === "day") setDay(event.target.value);
-      if (event.target.id === "month") setMonth(event.target.value);
-      if (event.target.id === "year") setYear(event.target.value);
-    }
-
-    calculate();
+  const validateFields = (e) => {
+    
+      if (e.target.checkValidity()) {
+        e.target.style.outline = "1px solid green";
+        if(!e.target.value)e.target.style.outline = "1px solid red";
+        if (e.target.id === "day") {
+          setDay(e.target.value);
+        }
+        if (e.target.id === "month") {
+          setMonth(e.target.value);
+        }
+        if (e.target.id === "year") {
+          setYear(e.target.value);
+        }
+      } else {
+        e.target.style.outline = "1px solid red";
+        setTimeout(() => {
+          e.target.style.outline = "1px solid green";
+        }, 1000);
+      }
+      
   };
-
-
-
 
   const calculate = (e, dd, mm, yyyy) => {
     const enteredDate = new Date(year, month - 1, day);
@@ -34,69 +36,69 @@ const Form = (props) => {
     mm = Math.abs(now.getMonth() - enteredDate.getMonth());
     dd = Math.abs(now.getDate() - enteredDate.getDate());
 
-console.log(button);
     if (month && day && year) {
       setButton(false);
-      console.log(button, 'truia');
-    }else{
+    } else {
       setButton(true);
     }
   };
 
-
-
-
-
   const reset = (event) => {
     event.preventDefault();
     props.onCalculate(day, month, year);
+    console.log(day, month, year);
     setYear("");
     setDay("");
     setMonth("");
-    setButton(true)
+    setButton(true);
   };
   return (
-    <div className={classes.form}>
-      <label htmlFor="day">
-        <h4>Day</h4>
-        <input
-          type="number"
-          max="31"
-          min="0"
-          id="day"
-          placeholder="dd"
-          value={day}
-          onChange={(e) => fieldValidationd(e, 2, 31)}
-        />
-      </label>
-      <label htmlFor="month">
-        <h4>Month</h4>
-        <input
-          type="number"
-          min="0"
-          max="12"
-          id="month"
-          placeholder="mm"
-          value={month}
-          onChange={(e) => fieldValidationd(e, 2, 12)}
-        />
-      </label>
-      <label htmlFor="year">
-        <h4>Year</h4>
-        <input
-          type="number"
-          min="0"
-          max="2023"
-          id="year"
-          value={year}
-          placeholder="yyyy"
-          onChange={(e) => fieldValidationd(e, 4, 2023)}
-        />
-      </label>
-      <button onClick={reset}  id="submit" type="submit" disabled={button}>
-        Calculate
-      </button>
-    </div>
+    <form onSubmit={calculate}>
+      <div className={classes.form}>
+        <label htmlFor="day">
+          <h4>Day</h4>
+          <input
+            type="number"
+            max="31"
+            min="1"
+            id="day"
+            placeholder="dd"
+            maxLength="2"
+            value={day}
+            onChange={validateFields}
+          />
+        </label>
+        <label htmlFor="month">
+          <h4>Month</h4>
+          <input
+            type="number"
+            min="1"
+            max="12"
+            id="month"
+            placeholder="mm"
+            maxLength="2"
+            value={month}
+            onChange={validateFields}
+          />
+        </label>
+        <label htmlFor="year">
+          <h4>Year</h4>
+          <input
+            type="number"
+            min="1"
+            max="2023"
+            id="year"
+            value={year}
+            maxLength="4"
+            placeholder="yyyy"
+            onChange={validateFields}
+          />
+        </label>
+        <button onClick={reset} id="submit" type="submit" disabled={button}>
+          Calculate
+        </button>
+      </div>
+    </form>
   );
 };
 
