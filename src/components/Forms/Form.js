@@ -46,19 +46,17 @@ const Form = (props) => {
     let yyyy = now.getFullYear() - userDate.getFullYear();
     let mm = now.getMonth() - userDate.getMonth();
     let dd = now.getDate() - userDate.getDate();
-    if(dd<0){
-      dd=31-Math.abs(dd);
-      mm=mm-1;
-    };
-
-    if(mm<0){
-      mm=12-Math.abs(mm)
-      yyyy=yyyy-1;
+    if (dd < 0) {
+      dd = 31 - Math.abs(dd);
+      mm = mm - 1;
     }
-    console.log(dd,mm,yyyy);
-   return [dd,mm,yyyy];
+
+    if (mm < 0) {
+      mm = 12 - Math.abs(mm);
+      yyyy = yyyy - 1;
+    }
+    return [dd, mm, yyyy];
   };
-  calculate();
 
   const reset = (event) => {
     event.preventDefault();
