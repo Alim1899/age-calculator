@@ -41,18 +41,28 @@ const Form = (props) => {
   };
 
   const calculate = (props) => {
-    const today = new Date();
-    let dd = today.getDate();
-    let mm = today.getMonth();
-    let yyyy = today.getFullYear()-year;
-    //console.log("Day: ", dd, " Month: ", mm, " Year: ", yyyy);
-    return [dd,mm,yyyy];
+    const now = new Date();
+    const userDate = new Date(year, month - 1, day);
+    let yyyy = now.getFullYear() - userDate.getFullYear();
+    let mm = now.getMonth() - userDate.getMonth();
+    let dd = now.getDate() - userDate.getDate();
+    if(dd<0){
+      dd=31-Math.abs(dd);
+      mm=mm-1;
+    };
+
+    if(mm<0){
+      mm=12-Math.abs(mm)
+      yyyy=yyyy-1;
+    }
+    console.log(dd,mm,yyyy);
+   return [dd,mm,yyyy];
   };
-  // calculate();
+  calculate();
 
   const reset = (event) => {
     event.preventDefault();
-    props.onCalculate(calculate()[0],calculate()[1],calculate()[2]);
+    props.onCalculate(calculate()[0], calculate()[1], calculate()[2]);
     setYear("");
     setDay("");
     setMonth("");
@@ -91,7 +101,7 @@ const Form = (props) => {
         <input
           type="number"
           min="1"
-          max="2023"
+          max="2022"
           id="year"
           value={year}
           maxLength="4"
