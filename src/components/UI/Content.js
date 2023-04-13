@@ -1,5 +1,5 @@
-import React from "react";
-import classes from './Content.module.css';
+import React, { useState } from "react";
+import classes from "./Content.module.css";
 import Form from "../Forms/Form";
 import Calculated from "./Calculated";
 const Content = (props) => {
@@ -8,8 +8,8 @@ const Content = (props) => {
     setDate((inputtedDate) => {
       return [...inputtedDate, { day: iDay, month: iMonth, year: iYear }];
     });
-    setDate([iDay,iMonth,iYear])
-    console.log(date);
+
+    setDate([iDay, iMonth, iYear]);
   };
   return (
     <div className={classes.content}>

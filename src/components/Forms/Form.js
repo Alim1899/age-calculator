@@ -34,26 +34,32 @@ const Form = (props) => {
       document.getElementById("month").value > 0 &&
       document.getElementById("year").value > 0
     ) {
-     
       setButton(false);
-    }else{
+    } else {
       setButton(true);
     }
   };
 
+  const calculate = (props) => {
+    const today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth();
+    let yyyy = today.getFullYear()-year;
+    //console.log("Day: ", dd, " Month: ", mm, " Year: ", yyyy);
+    return [dd,mm,yyyy];
+  };
+  // calculate();
+
   const reset = (event) => {
     event.preventDefault();
+    props.onCalculate(calculate()[0],calculate()[1],calculate()[2]);
     setYear("");
     setDay("");
     setMonth("");
-    setButton()
+    setButton(true);
   };
   return (
-    <form
-      onChange={btnEnabler}
-      className={classes.form}
-      onSubmit={props.onCalculate}
-    >
+    <form onChange={btnEnabler} className={classes.form}>
       <label htmlFor="day">
         <h4>Day</h4>
         <input
