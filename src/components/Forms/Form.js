@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import classes from "./Form.module.css";
-
 const Form = (props) => {
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
@@ -43,6 +42,40 @@ const Form = (props) => {
   const calculate = (props) => {
     const now = new Date();
     const userDate = new Date(year, month - 1, day);
+
+
+   
+    // const diffTime = Math.abs(now - userDate);
+    
+    // const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    // console.log(diffTime + " milliseconds");
+  //   // console.log(diffDays + " days");
+
+
+  //   const utc1 = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+  // const utc2 = Date.UTC(userDate.getFullYear(), userDate.getMonth(), userDate.getDate());
+  // const days = Math.abs(utc2 - utc1)/(1000*60*60*24)
+  // const years = Math.floor(days/365);
+  // const months = Math.abs(days%365/31);
+
+  // console.log(months);
+  // console.log(days);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     let yyyy = now.getFullYear() - userDate.getFullYear();
     let mm = now.getMonth() - userDate.getMonth();
     let dd = now.getDate() - userDate.getDate();
@@ -57,6 +90,7 @@ const Form = (props) => {
     }
     return [dd, mm, yyyy];
   };
+  calculate();
 
   const reset = (event) => {
     event.preventDefault();
