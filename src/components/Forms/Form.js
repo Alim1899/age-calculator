@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import classes from "./Form.module.css";
 const Form = (props) => {
   const [day, setDay] = useState("");
@@ -6,32 +6,40 @@ const Form = (props) => {
   const [year, setYear] = useState("");
   const [button, setButton] = useState(true);
 
+  const enteredDay = useRef();
+  const enteredMonth = useRef();
+  const enteredYear = useRef();
+
   const validateFields = (e) => {
+  
     if (e.target.checkValidity()) {
       e.target.style.outline = "1px solid green";
       if (!e.target.value) e.target.style.outline = "1px solid red";
       if (e.target.id === "day") {
-        setDay(e.target.value);
+        setDay(enteredDay.current.value);
       }
       if (e.target.id === "month") {
-        setMonth(e.target.value);
+        setMonth(enteredMonth.current.value);
       }
       if (e.target.id === "year") {
-        setYear(e.target.value);
+        setYear(enteredYear.current.value);
+        if(enteredYear.current.value<1920){
+          e.target.style.outline = '1px solid red';
+        }
       }
     } else {
       e.target.style.outline = "1px solid red";
       setTimeout(() => {
-        e.target.style.outline = "1px solid green";
+        e.target.style.outline = "1px solid black";
       }, 1000);
     }
   };
 
   const btnEnabler = (e) => {
     if (
-      document.getElementById("day").value > 0 &&
-      document.getElementById("month").value > 0 &&
-      document.getElementById("year").value > 0
+      enteredDay.current.value > 0 &&
+      enteredMonth.current.value > 0 &&
+      enteredYear.current.value>= 1920
     ) {
       setButton(false);
     } else {
@@ -42,40 +50,6 @@ const Form = (props) => {
   const calculate = (props) => {
     const now = new Date();
     const userDate = new Date(year, month - 1, day);
-
-
-   
-    // const diffTime = Math.abs(now - userDate);
-    
-    // const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-    // console.log(diffTime + " milliseconds");
-  //   // console.log(diffDays + " days");
-
-
-  //   const utc1 = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
-  // const utc2 = Date.UTC(userDate.getFullYear(), userDate.getMonth(), userDate.getDate());
-  // const days = Math.abs(utc2 - utc1)/(1000*60*60*24)
-  // const years = Math.floor(days/365);
-  // const months = Math.abs(days%365/31);
-
-  // console.log(months);
-  // console.log(days);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     let yyyy = now.getFullYear() - userDate.getFullYear();
     let mm = now.getMonth() - userDate.getMonth();
     let dd = now.getDate() - userDate.getDate();
@@ -112,6 +86,7 @@ const Form = (props) => {
           placeholder="dd"
           maxLength="2"
           value={day}
+          ref={enteredDay}
           onChange={validateFields}
         />
       </label>
@@ -125,17 +100,24 @@ const Form = (props) => {
           placeholder="mm"
           maxLength="2"
           value={month}
+          ref={enteredMonth}
           onChange={validateFields}
         />
       </label>
       <label htmlFor="year">
-        <h4>Year</h4>
+        <h4>
+          Year
+          <span style={{ backgroundColor: "white", fontSize: "8px" }}>
+            (min:1900)
+          </span>
+        </h4>
         <input
           type="number"
           min="1"
           max="2022"
           id="year"
           value={year}
+          ref={enteredYear}
           maxLength="4"
           placeholder="yyyy"
           onChange={validateFields}
